@@ -1,68 +1,36 @@
 /*
- All Shortcode Styles are here
+This file is used to contain all shortcodes imports.
+Files inside this folder should contain all styles relating
+to a reusable shortcodes.
 */
 
+/******************************
+
+INDEX:
+
+	s00 - Shortcode - Common Helpers
+	s01 - Shortcode - Section Title
+
+
+	s50 - Shortcode - Responsive CSS
+
+
+******************************/
 
 /**************************************
-
-	00 - container
-	01 - row
-	02 - spacer
-	03 - get_section
-	04 - sec_title
-	05 - icap
-	06 - h
-	07 - schema_address
-	08 - PRIVATE
-	09 - img_series
-	10 - service
-	11 - lead_text
-	12 - img_popup
-	13 - blockquote
-	14 - button
-	15 - divider
-	16 - p
-	17 - span
-
+s00 - Shortcode - Common Helpers
 **************************************/
 
-/************************************************************
-    General
-*************************************************************/
-
-.codexin-admin-print {
-    font-size: 16px;
-    border-radius: 0;
-    margin-bottom: 15px;
-    clear: both;
-    float: none;
-    margin-top: 50px;
+.codexin-title-wrapper,
+.codexin-sec-title-2,
+.codexin-title-wrapper.right,
+.codexin-title-wrapper.right .codexin-sec-title-2 {
+    padding-top: 80px;
+    padding-bottom: 80px;
 }
 
 /**************************************
-s00 & s01 container, row
-**************************************/
-
-.flex-wrapper {
-    display: -webkit-flex;
-    display: -moz-flex;
-    display: -ms-flex;
-    display: -o-flex;
-    display: flex;
-    align-items: center;
-}
-
-/**************************************
-s02 spacer
-**************************************/
-
-/**************************************
-s03 get_section
-**************************************/
-
-
-/**************************************
-s04 sec_title
+s00 - Shortcode - Section Title
 **************************************/
 
 .codexin-title-wrapper {
@@ -70,11 +38,19 @@ s04 sec_title
     background-repeat: no-repeat;
     overflow: hidden;
     background-position: center;
+    -webkit-background-size: 100% 100%;
     background-size: 100%;
+    display: -webkit-inline-flex;
+    display: -moz-inline-flex;
+    display: -ms-inline-flex;
+    display: -o-inline-flex;
+    display: -webkit-inline-box;
+    display: -ms-inline-flexbox;
+    display: inline-flex;
 }
 
 .codexin-sec-title-2 {
-	font-size: 26px;
+    font-size: 26px;
     font-weight: 500;
     letter-spacing: -1px;
     color: #002D87;
@@ -103,569 +79,35 @@ s04 sec_title
 }
 
 .codexin-sec-title-1 {
-	font-size: 28px;
+    font-size: 28px;
     line-height: 1.3em;
     letter-spacing: 1px;
     text-transform: initial;
 }
 
 .codexin-primary-title {
-	font-size: 28px;
+    font-size: 28px;
     line-height: 1.3em;
     letter-spacing: 1px;
     text-transform: initial;
 }
 
-
 /**************************************
-s05 icap
+s50 - Shortcode - Responsive CSS
 **************************************/
 
-.codexin-dropcap-square {
-	font-size: 50px;
-    vertical-align: middle;
-    display: inline-block;
-    float: left;
-    margin-bottom: 10px;
-    margin-right: 10px;
-    width: auto;
-    height: 45px;
-    line-height: 45px;
-    font-weight: bold;
-}
-
-.lead .codexin-dropcap-square {
-    font-size: 60px;
-    width: auto;
-    height: 50px;
-    line-height: 55px;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-/**************************************
-s06 h (highlighted text)
-**************************************/
-
-/**************************************
-s07 PRIVATE
-**************************************/
-
-/**************************************
-s08 recent_posts
-**************************************/
-
-
-
-.codexin-item-blog-post {
-    position: relative;
-    background: #fff;
-    margin-bottom: 20px;
-	-webkit-transition: 0.3s;
-	-moz-transition: 0.3s;
-	-ms-transition: 0.3s;
-	-o-transition: 0.3s;
-	transition: 0.3s;
-}
-
-.codexin-item-blog-post:hover {
-    box-shadow: 0 0 3px rgba(0, 0, 0, .25);
-}
-
-
-.codexin-item-blog-post .thumb a {
-    display: block;
-    width: 100%;
-    height: 149px;
-    overflow: hidden;
-    line-height: 0;
-    background-image: url('http://placehold.it/300X200');
-    background-size: cover;
-    background-position: center;
-}
-
-.codexin-item-blog-post .date {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 58px;
-    height: 52px;
-}
-
-.codexin-item-blog-post .date .bg {
-    background: #182C4D;
-    opacity: .7;
-    filter: alpha(opacity=70);
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    z-index: 1;
-    -webkit-transition: all .3s ease 0s;
-    -moz-transition: all .3s ease 0s;
-    -ms-transition: all .3s ease 0s;
-    -o-transition: all .3s ease 0s;
-    transition: all .3s ease 0s;
-}
-
-.codexin-item-blog-post .date .text {
-    color: #fff;
-    height: 100%;
-    line-height: 52px;
-    text-align: center;
-    position: relative;
-    width: 100%;
-    z-index: 2;
-    overflow: hidden;
-    padding: 6px 4px;
-}
-
-.codexin-item-blog-post .date .text span {
-    display: block;
-    vertical-align: middle;
-    line-height: 14px;
-    font-weight: 500;
-    text-transform: uppercase;
-}
-
-.codexin-item-blog-post .date .text span.d {
-    font-size: 20px;
-    line-height: 24px;
-}
-
-.codexin-item-blog-post .date .text span.m {
-    font-size: 11px;
-}
-
-.codexin-item-blog-post .content {
-    padding: 22px 24px;
-    background: #f6f6f6;
-    -webkit-transition: all .3s ease 0s;
-    -moz-transition: all .3s ease 0s;
-    -ms-transition: all .3s ease 0s;
-    -o-transition: all .3s ease 0s;
-    transition: all .3s ease 0s;
-}
-
-.codexin-item-blog-post .title {
-    font-size: 24px;
-    margin-top: 0;
-    margin-bottom: 18px;
-}
-
-.codexin-item-blog-post .title a {
-    color: #333;
-    font-size: 14px;
-    font-weight: 700;
-    text-transform: uppercase;
-}
-
-.codexin-item-blog-post .excerpt {
-    color: #666;
-    margin-bottom: 32px;
-}
-
-.codexin-item-blog-post .readmore {
-    font-weight: 700;
-    font-size: 14px;
-    color: #333;
-    text-transform: uppercase;
-}
-
-/************************************************************
-    009 - Image Series
-*************************************************************/
-
-.image-series img {
-    margin-bottom: 15px;
-}
-
-
-/**************************************
- well
-**************************************/
-
-.codexin-emphasize-text {
-    background: #f1f1f1;
-    padding: 30px 25px;
-    border-radius: 5px;
-    font-size: 18px;
-    line-height: 1.65em;
-    margin-bottom: 30px;
-}
-
-
-
-/**************************************
- s10 service_box
-**************************************/
-
-.codexin-single-service-wrapper {
-    margin-bottom: 35px;
-}
-
-.codexin-single-service-wrapper .codexin-image-thumb {
-    display: block;
-    overflow: hidden;
-    position: relative;
-    text-align: center;
-}
-
-.codexin-single-service-wrapper a {
-    position: relative;
-    display: block;
-    overflow: hidden;
-    margin-bottom: 30px;
-}
-
-.codexin-single-service-wrapper .codexin-service-link {
-    position: absolute;
-    text-align: center;
-    width:100%;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
-    margin:auto;
-    height:50px;
-    text-transform: uppercase;
-    color: #fff;
-    font-weight: bold;
-    line-height: 50px;
-    display: block;
-    z-index:2;
-    opacity:0;
-    -webkit-transition: all .5s;
-    -moz-transition: all .5s;
-    -ms-transition: all .5s;
-    -o-transition: all .5s;
-    transition: all .5s;
-}
-
-
-.codexin-single-service-wrapper a:hover .codexin-service-link {
-    opacity:1;
-}
-
-.codexin-single-service-wrapper a::before {
-    content: "";
-    background: #324C69;
-    background: rgba(15,43,83,.65);
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
-    display: block;
-    opacity: 0;
-    -webkit-transition: all .5s;
-    -moz-transition: all .5s;
-    -ms-transition: all .5s;
-    -o-transition: all .5s;
-    transition: all .5s;
-    z-index: 1;
-}
-
-
-.codexin-single-service-wrapper a::after {
-    content: "";
-    background: rgba(242,235,216,.2);
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: block;
-    opacity: 0;
-    -webkit-transition: all .5s;
-    -moz-transition: all .5s;
-    -ms-transition: all .5s;
-    -o-transition: all .5s;
-    transition: all .5s;
-    z-index: 0;
-}
-
-
-.codexin-single-service-wrapper .codexin-image-thumb img {
-    width: 100%;
-    height: auto;
-    display: inline-block;
-    margin-bottom: 0;
-    -webkit-transition: all .5s;
-    -moz-transition: all .5s;
-    -ms-transition: all .5s;
-    -o-transition: all .5s;
-    transition: all .5s;
-}
-
-.codexin-single-service-wrapper a:hover img {
-    -webkit-transform: scale(1.2, 1.2);
-    -moz-transform: scale(1.2, 1.2);
-    -ms-transform: scale(1.2, 1.2);
-    -o-transform: scale(1.2, 1.2);
-    transform: scale(1.2,1.2);
-}
-
-.codexin-single-service-wrapper .codexin-service-desc h3 {
-    text-align: center;
-    font-size: 18px;
-    border-top: 2px solid #ffd8be;
-    border-bottom: 2px solid #ffd8be;
-    text-transform: uppercase;
-    padding-top: 15px;
-    padding-bottom: 15px;
-}
-
-.codexin-single-service-wrapper a:hover::before, .codexin-single-service-wrapper a:hover::after {
-    opacity: 1;
-}
-
-
-/**************************************
- s15 divider
-**************************************/
-
-.codexin-divider {
-    overflow: hidden;
-    float: none;
-    clear: both;
-}
-
-.codexin-divider hr {
-    border: 0;
-    border-top: 1px solid #dedede;
-}
-
-
-/**************************************
-newsletter
-**************************************/
-
-.codexin-newsletter {
-    text-align: center;
-    padding-top: 30px;
-    padding-bottom: 30px;
-}
-
-.codexin-centered {
-    justify-content: center;
-}
-
-.codexin-newsletter h2 {
-    margin-bottom: 0;
-    margin-right: 20px;
-}
-
-.codexin-newsletter input[type="email"] {
-    margin-right: 10px;
-    min-width: 320px;
-    height: 48px;
-    padding-left: 7px;
-    padding-right: 7px;
-    border: 1px solid #ccc;
-    outline: 0;
-    background: #fcfcfc;
-}
-
-.codexin-newsletter input[type="submit"] {
-    background: #80bd01;
-    border: 0;
-    outline: 0;
-    color: #fff;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 18px !important;
-    padding-top: 7px;
-    padding-bottom: 7px;
-    height: 48px;
-}
-
-
-/**************************************
-button
-**************************************/
-
-
-.codexin_btn {
-  width:140px;
-  float:left;
-  margin-right: 15px;
-  height:40px;
-  display: block;
-  text-align: center;
-  line-height: 40px;
-  font-size:16px;
-  position: relative;
-  cursor: pointer;
-  background: #46a;
-  overflow: hidden;
-}
-
-.codexin_btn span {
-  color: #fff;
-  display: block;
-  position: absolute;
-  width:100%;
-  height: 100%;
-  top:0;
-  left:0;
-  transition: all .3s;
-}
-
-.codexin_btn::before {
-  content:"";
-  width:0%;
-  height:100%;
-  left:0%;
-  top:0;
-  background: #fff;
-  display: block;
-  position: absolute;
-  transition: all .3s;
-}
-
-.codexin_btn.codexin_centerSwipe::before, 
-.codexin_btn.codexin_skewSwipe::before {
-  left: 50%;
-}
-
-.codexin_btn.codexin_skewSwipe:hover::before {
-  transform: skewX(30deg);
-}
-
-.codexin_btn:hover::before {
-  width:100%;
-  left:0%;
-}
-
-.codexin_btn:hover span {
-  color: #46a;
-}
-
-
-/* CX button 3 */
-
-.codexin_btn_3_wrapper {
-    position: relative;
-    display: inline-block;
-    width: 220px;
-    height: 40px;
-}
-
-.codexin_btn_3 {
-    cursor: pointer;
-    background-color: #000;
-    width: 220px;
-    height: 40px;
-    line-height: 40px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 0;
-    box-shadow: 0px 0px 17px 1px rgba(0, 0, 0, 0.34);
-}
-
-.codexin_btn_3:before {
-    top: 0;
-    left: 0;
-    right: auto;
-}
-
-.codexin_btn_3:after {
-    bottom: 0;
-    right: 0;
-    left: auto;
-}
-
-.codexin_btn_3:before, 
-.codexin_btn_3:after {
-    content: '';
-    background: #fff;
-    height: 50%;
-    width: 0;
-    position: absolute;
-    transition: 0.3s cubic-bezier(0.785, 0.135, 0.15, 0.86);
-}
-
-.codexin_btn_3 span {
-    color: #fff;
-    display: block;
-    padding-left: 35px;
-    text-transform: uppercase;
-    font: bold 16px/40px Arial;
-    transform: scaleX(0.6);
-    letter-spacing: 3px;
-    transform-origin: center left;
-    transition: color 0.3s ease;
-    position: relative;
-    z-index: 1;
-}
-
-.codexin_btn_3 em {
-    position: absolute;
-    height: 1px;
-    background: #fff;
-    width: 30%;
-    right: 23px;
-    top: 50%;
-    transform: scaleX(0.25);
-    transform-origin: center right;
-    transition: all 0.3s ease;
-    z-index: 1;
-}
-
-.codexin_btn_3:hover {
-    text-decoration: none;
-}
-
-.codexin_btn_3:hover::before {
-    width: 100%;
-    right: 0;
-    left: auto;
-}
-
-.codexin_btn_3:hover::after {
-    width: 100%;
-    left: 0;
-    right: auto;
-}
-
-.codexin_btn_3:hover span {
-    color: #000;
-    text-decoration: none;
-}
-
-.codexin_btn_3:hover em {
-    background: #000;
-    transform: scaleX(1);
-}
-
-.codexin_btn_4 {
-    background: #ffc845;
-    color: #2b2b2b;
-    padding: 14px 35px;
-}
-
-/************************************************************
-    Image popup
-*************************************************************/
-
-@media only screen and (max-width: 520px) {
-    #whole .mpopup.thumbnail-img {
-        width:100%;
-        float: none !important;
-        clear:both !important;
-        margin-bottom: 20px;
-        display: block;
-    }
-
-    #whole .mpopup.thumbnail-img.alignright, 
-    #whole .mpopup.thumbnail-img.alignleft, 
-    #whole .mpopup.thumbnail-img.pull-left, 
-    #whole .mpopup.thumbnail-img.pull-right {
-        margin-left: 0;
-        margin-right: 0;
+@media only screen and (max-width: 767px) {
+
+    .codexin-title-wrapper,
+.codexin-sec-title-2,
+.codexin-title-wrapper.right,
+.codexin-title-wrapper.right .codexin-sec-title-2 {
+        padding-top: 60px;
+        padding-bottom: 60px;
     }
 }
+
+
+/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbInNob3J0Y29kZXMuc2NzcyIsImJhc2UvX3BsYWNlaG9sZGVyLnNjc3MiLCJhYnN0cmFjdHMvX3ZhcmlhYmxlcy5zY3NzIiwiYWJzdHJhY3RzL19taXhpbnMuc2NzcyIsInNob3J0Y29kZXMuY3NzIiwic2hvcnRjb2Rlcy9fc2Mtc2VjLXRpdGxlLnNjc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUE7Ozs7RUFJRTtBQUVGOzs7Ozs7Ozs7OzsrQkFXK0I7QUFPL0I7O3VDQUV1QztBQ3hCdkM7RUFDQyxrQkNtQzJCO0VEbEMzQixxQkNrQzJCO0NEN0IzQjs7QUVrYU87RUZ6YVI7SUFJRSxrQkN3QzREO0lEdkM1RCxxQkN1QzREO0dEckM3RDtDR3FCQTs7QUM5QkQ7O3VDQUV1QztBQUV2QztFQUNJLHNEQUFxRDtFQUNyRCw2QkFBNEI7RUFDNUIsaUJBQWdCO0VBQ2hCLDRCQUEyQjtFQUMzQixtQ0FBcUI7VUFBckIsc0JBQXFCO0VGNEJyQiw2QkFBUztFQUNULDBCQUFTO0VBQ1QseUJBQVM7RUFDVCx3QkFBUztFQUNULDRCQUFTO0VBQVQsNEJBQVM7RUFBVCxxQkFBUztDRTdCWjs7QUFFRDtFQUNDLGdCQUFlO0VBQ1osaUJBQWdCO0VBQ2hCLHFCQUFvQjtFQUNwQixlQUFjO0VBQ2Qsc0JBQXFCO0VBQ3JCLGlCQUFnQjtFQUNoQiwwQkFBeUI7RUFDekIsNEJBQTJCO0VBQzNCLGlCQUFnQjtFQUNoQix3QkFBdUI7Q0FFMUI7O0FBRUQ7RUFDSSxrQkFBaUI7Q0FFcEI7O0FBRUQ7RUFDSSwwQkFBeUI7Q0FFNUI7O0FBRUQ7RUFDSSxtQkFBa0I7Q0FDckI7O0FBRUQ7RUFDSSw2QkFBNEI7Q0FDL0I7O0FBRUQ7RUFDQyxnQkFBZTtFQUNaLG1CQUFrQjtFQUNsQixvQkFBbUI7RUFDbkIsd0JBQXVCO0NBQzFCOztBQUVEO0VBQ0MsZ0JBQWU7RUFDWixtQkFBa0I7RUFDbEIsb0JBQW1CO0VBQ25CLHdCQUF1QjtDQUMxQjs7QUx6QkQ7O3VDQUV1QyIsImZpbGUiOiJzaG9ydGNvZGVzLmNzcyJ9 */
+
+/*# sourceMappingURL=shortcodes.css.map */

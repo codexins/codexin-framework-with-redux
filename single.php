@@ -1,4 +1,18 @@
-<?php get_header() ?>
+<?php
+/**
+ * The template for displaying all single posts and other post-types
+ * that don't have a specific template.
+ *
+ * @package 	Codexin
+ * @subpackage 	Templates
+ * @since 		1.0
+ */
+
+
+// Do not allow directly accessing this file.
+defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directly.', 'TEXT_DOMAIN' ) );
+
+get_header(); ?>
 
 <div id="content" class="section site-content">
 	<div class="container">
@@ -60,7 +74,7 @@
 
 				</main> <!-- end of #primary -->
 
-				<?php codexin_post_navigation(); ?>
+				<?php codexin_post_nav(); ?>
 
 				<?php
 				// If comments are open or we have at least one comment, load up the comment template.

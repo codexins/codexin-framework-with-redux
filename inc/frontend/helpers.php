@@ -1,10 +1,17 @@
 <?php
 
 /**
-*
-* Helper Function for declaring Global Variable for theme options
-*
-**/
+ * Various helper functions definition related to Codexin framework
+ *
+ * @package     Codexin
+ * @subpackage  Core
+ * @since       1.0
+ */
+
+
+// Do not allow directly accessing this file.
+defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directly.', 'TEXT_DOMAIN' ) );
+
 if (!function_exists('codexin_get_option')){
     /**
      * Function to get options in front-end
@@ -12,7 +19,6 @@ if (!function_exists('codexin_get_option')){
      * @param string $default If $option doesn't exist in DB return $default value
      * @return string
      */
-
     function codexin_get_option( $option = false, $default = false ){
         if($option === false){
             return false;
@@ -32,88 +38,81 @@ if (!function_exists('codexin_get_option')){
     }
 }
 
-
-/**
- * Single Post Navigation inside single.php files
- *
- */
-
-if ( !function_exists( 'codexin_post_navigation' ) ) {
-    function codexin_post_navigation() {
-
-        $prev_link = get_previous_post_link('%link', esc_html__('Previous Post &raquo;', 'codexin'));
-        $next_link = get_next_post_link('%link', esc_html__('&laquo; Next Post', 'codexin'));
-        if(!empty($prev_link) || !empty($next_link)):
-        echo '<div class="posts-nav clearfix">';
-            if($next_link): 
-            echo '<div class="nav-next alignleft">'. $next_link .'</div>';
-            endif; 
-            
-            if($prev_link): 
-            echo '<div class="nav-previous alignright">'. $prev_link .'</div>';
-            endif; 
-        echo '</div>';
-        endif;
+if ( ! function_exists( 'codexin_meta' ) ) {
+    /**
+     * Helper Function to get meta data from metabox
+     *
+     * @param   string     $key        The meta key name from which we want to get the value
+     * @param   array      $args       The arguments of the meta key
+     * @param   int        $post_id    The ID of the post
+     * @return  mixed
+     * @since   v1.0
+     */
+    function codexin_meta( $key, $args = array(), $post_id = null ){
+        if( function_exists( 'rwmb_meta' ) ) {
+            return rwmb_meta( $key, $args, $post_id );
+        } else {
+            return null;
+        }
     }
 }
 
-/**
- * Blog/Archive page navigation
- *
- */
+if ( ! function_exists( 'codexin_comment_function' ) ) {
+    /**
+     * Custom Callback Function for Comment layout
+     *
+     * @param   $comment
+     * @param   $args
+     * @param   $depth
+     * @since   v1.0
+     */
+    function codexin_comment_function( $comment, $args, $depth ) {
 
-if ( !function_exists( 'codexin_posts_navigation' ) ) {
-    function codexin_posts_navigation() {
-        $prev_link = get_previous_posts_link(esc_html__('&laquo; Newer Posts', 'codexin'));
-        $next_link = get_next_posts_link(esc_html__('Older Posts &raquo; ', 'codexin'));
+        $GLOBALS['comment'] = $comment; ?>
 
-        if(!empty($prev_link) || !empty($next_link)):
-        echo '<div class="posts-nav clearfix">';
-            if($next_link): 
-            echo '<div class="nav-next alignright">'. $next_link .'</div>';
-            endif; 
-            
-            if($prev_link): 
-            echo '<div class="nav-previous alignleft">'. $prev_link .'</div>';
-            endif; 
-        echo '</div>';
-        endif;
+        <li id="li-comment-<?php comment_ID() ?>">
+            <div id="comment-<?php comment_ID(); ?>" class="comment-body">
+                <div class="comment-single">
+                    <div class="comment-single-left comment-author vcard">
+                        <?php echo get_avatar( $comment, $size='90' ); ?>
+                    </div>
 
+                    <div class="comment-single-right comment-info">
+                    <?php printf( '<span class="fn" itemprop="name">%s</span>', get_comment_author_link() ); ?>
+                        <div class="comment-text" itemprop="text">
+                            <?php comment_text(); ?>
+                        </div>
+
+                        <div class="comment-meta">
+                            <a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>">
+                                <time datetime="<?php echo get_the_time('c'); ?>" itemprop="datePublished">
+                                    <?php printf( esc_html__('%1$s at %2$s', 'reveal'), get_comment_date(),  get_comment_time() ); ?>
+                                </time>
+                            </a>
+                            <?php edit_comment_link( esc_html__( '(Edit)', 'reveal' ),'  ','' ) ?>
+                            <span class="comment-reply">
+                                <?php 
+                                comment_reply_link( array_merge( $args, 
+                                    array( 
+                                        'depth' => $depth, 
+                                        'max_depth' => $args['max_depth'], 
+                                        'before' => ' &nbsp;&nbsp;<i class="fa fa-caret-right"></i> &nbsp;&nbsp;' 
+                                    ) 
+                                ) ); 
+                                ?>
+                            </span>
+                        </div>
+
+                        <?php if ($comment->comment_approved == '0') { ?>
+                            <div class="moderation-notice"><em><?php echo esc_html__('Your comment is awaiting moderation.', 'reveal') ?></em></div>
+                        <?php } ?>
+
+                    </div>
+                </div>     
+            </div>
+
+     <?php
     }
-}
-
-
-
-/**
- * Comments Function used on comments.php
- *
- */
-function codexin_comment_function($comment, $args, $depth) {
-    $GLOBALS['comment'] = $comment; ?>
-    <li <?php comment_class('clearfix'); ?> id="li-comment-<?php comment_ID() ?>">
-        <div id="comment-<?php comment_ID(); ?>" class="clearfix">
-            <div class="comment-single">
-                <div class="comment-single-left comment-author vcard">
-                <?php echo get_avatar($comment,$size='90'); ?>
-                </div>
-
-                <div class="comment-single-right comment-info">
-                <?php printf('<span class="fn">%s</span>', get_comment_author_link()) ?>
-                    <div class="comment-text">
-                    <?php comment_text() ?>
-                    </div>
-
-                    <div class="comment-meta"><a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>"><?php printf(esc_html__('%1$s at %2$s', 'codexin'), get_comment_date(),  get_comment_time()) ?></a><?php edit_comment_link(esc_html__('(Edit)', 'codexin'),'  ','') ?><span class="comment-reply"><?php comment_reply_link(array_merge( $args, array('depth' => $depth, 'max_depth' => $args['max_depth'], 'before' => ' &nbsp;&nbsp;<i class="fa fa-caret-right"></i> &nbsp;&nbsp;'))) ?></span>
-                    </div>
-
-                    <?php if ($comment->comment_approved == '0') : ?>
-                    <div class="moderation-notice"><em><?php echo esc_html__('Your comment is awaiting moderation.', 'codexin') ?></em></div>
-                    <?php endif; ?>
-
-                </div>
-            </div>     
-        </div>
- <?php
 }
 
 
@@ -170,7 +169,6 @@ if ( ! function_exists( 'codexin_hex_to_rgba' ) ) {
             return $rgb;
         } else {
             $opacity = floatval( $opacity );
-
             return 'rgba(' . $rgb . ',' . $opacity . ')';
         }
     }
@@ -202,5 +200,62 @@ if ( ! function_exists( 'codexin_adjust_color_brightness' ) ) {
             .str_pad( dechex( max( 0,min( 255,$b ) ) ),2,"0",STR_PAD_LEFT);
 
         return codexin_sanitize_hex_color( $new_hex );    
+    }
+}
+
+
+if ( ! function_exists( 'codexin_get_page_title' ) ) {
+    /**
+     * Helper function to return a custom formated page title
+     *
+     * @param   string      $title      Title to show
+     * @param   int         $id         Post ID
+     * @return  mixed
+     * @since   v1.0
+     */
+    function codexin_get_page_title( $title, $id = null ) {
+        ?>
+        <!-- Start of Page Title -->
+        <div id="page_title">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12">
+                        <h1><?php echo wp_kses_post( $title ); ?></h1>   
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End of Page Title -->
+        <?php
+    }
+}
+
+
+if ( ! function_exists( 'codexin_char_limit' ) ) {
+    /**
+     * Helper Function to limit the character length without breaking any word
+     *
+     * @param   int       $limit     The number of character to limit
+     * @param   string    $type      The type of content (possible values: title/excerpt)
+     * @return  mixed
+     * @since   v1.0
+     */
+    function codexin_char_limit( $limit, $type ) {
+        $content = ( $type == 'title' && $type !== 'excerpt' ) ? get_the_title() : get_the_excerpt();
+        $limit++;
+
+        if ( mb_strlen( $content ) > $limit ) {
+            $subex = mb_substr( $content, 0, $limit);
+            $exwords = explode( ' ', $subex );
+            $excut = - ( mb_strlen( $exwords[ count( $exwords ) - 1 ] ) );
+            if ( $excut < 0 ) {
+                echo mb_substr( $subex, 0, $excut );
+            } else {
+                return $subex;
+            }
+            echo '...';
+        } else {
+            return $content;
+        }
     }
 }

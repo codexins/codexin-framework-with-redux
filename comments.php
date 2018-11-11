@@ -1,14 +1,22 @@
 <?php
+
 /**
+ *
  * The template for displaying comments
  *
  * This is the template that displays the area of the page that contains both the current comments
  * and the comment form.
  *
- * @link https://codex.wordpress.org/Template_Hierarchy
- *
- * @package codexin
+ * @package 	Codexin
+ * @subpackage 	Templates
+ * @since 		1.0
  */
+
+
+// Disable direct access to the comments script
+if ( 'comments.php' == basename( $_SERVER['SCRIPT_FILENAME'] ) ) {
+    die ( esc_html__('Please do not load this page directly.', 'TEXT_DOMAIN')  );
+}
 
 /*
  * If the current post is protected by a password and
@@ -16,77 +24,95 @@
  * return early without loading the comments.
  */
 if ( post_password_required() ) {
-	return;
+	echo '<div class="nopassword">'. esc_html__('This post is password protected. Enter the password to view any comments.', 'TEXT_DOMAIN') .'</div>';
+    return;
 }
+
 ?>
 
 <div id="comments" class="comments-area">
-
 	<?php
-	// You can start editing here -- including this comment!
-	if ( have_comments() ) : ?>
-		<h3><?php comments_number(__('This post has no comments', 'codexin'), __('This post has One Comment', 'codexin'), __('This post has % Comments', 'codexin') ); ?></h3>
 
-		<ol class="comment-list clearfix">
-			<?php
-				wp_list_comments('type=all&callback=codexin_comment_function');
-			?>
-		</ol><!-- .comment-list -->
+		// Checking if there is any comments
+		if ( have_comments() ) { ?>
+			<h3>
+				<?php
+					// Diplaying the comment number
+					comments_number(
+					esc_html__( 'This post has no comments', 'TEXT_DOMAIN' ), 
+					esc_html__( 'This post has One Comment', 'TEXT_DOMAIN' ), 
+					__( 'This post has <span>%</span> Comments', 'TEXT_DOMAIN' )
+					); 
+				?>
+			</h3>
+			<ol class="comment-list">
+				<?php
+					wp_list_comments('type=all&callback=codexin_comment_function');
+				?>
+			</ol><!-- end of comment-list -->
+			<?php codexin_comments_nav(); ?>
 
-		<?php if ( get_comment_pages_count() > 1 && get_option( 'page_comments' ) ) : // Are there comments to navigate through? ?>
-		<nav id="comment-nav-below" class="navigation comment-navigation" role="navigation">
-			<h2 class="screen-reader-text"><?php esc_html_e( 'Comment navigation', 'codexin' ); ?></h2>
-			<div class="nav-links">
-
-				<div class="nav-previous"><?php previous_comments_link( esc_html__( '&laquo; Older Comments', 'codexin' ) ); ?></div>
-				<div class="nav-next"><?php next_comments_link( esc_html__( 'Newer Comments &raquo;', 'codexin' ) ); ?></div>
-
-			</div><!-- .nav-links -->
-		</nav><!-- #comment-nav-below -->
 		<?php
-		endif; // Check for comment navigation.
 
-	endif; // Check for have_comments().
+	} // Check for have_comments().
 
-
-	// If comments are closed and there are comments, let's leave a little note, shall we?
-	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) : ?>
-
-		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'codexin' ); ?></p>
+	// If comments are closed and there are comments, let's leave a little note
+	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) { ?>
+		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'TEXT_DOMAIN' ); ?></p>
 	<?php
-	endif;
+	} // Check for comments closed
 
-	//comment_form();
-
-
-
+	// Getting parametes for Comment Form
 	$commenter = wp_get_current_commenter();
 	$req = get_option( 'require_name_email' );
 	$aria_req = ( $req ? " aria-required='true'" : '' );
 
-	
-
+	// Building Comment Form
 	comment_form(array(
-		'fields' => apply_filters( 'comment_form_default_fields', array(
-			
-			'comment_notes_after' => '',	
-			'author' => '<div class="row"><div class="col-sm-4"><div class="comment-form-author"><fieldset><input id="author" name="author" type="text" placeholder="'.__( 'Name', 'codexin' ). ( $req ? ' *' : '' ).'" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' /></fieldset></div></div>',
-			'email' => '<div class="col-sm-4"><div class="comment-form-email"><fieldset><input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30" placeholder="'. __( 'Email', 'codexin' ) . ( $req ? ' *' : '' ) .'" ' . $aria_req . ' /></fieldset></div></div>',
-			'url' => '<div class="col-sm-4"><div class="comment-form-url"><fieldset><input id="url" name="url" type="text" value="' . esc_attr( $commenter['comment_author_url'] ) . '" placeholder="'.__( 'Website', 'codexin' ).'" size="30" /></fieldset></div></div></div>'
-
-		)),
-		'comment_notes_before' => '',
-		'comment_notes_after' => '',
-		'title_reply' => __( 'Leave a Comment', 'codexin' ),
-		'title_reply_to' => __( 'Leave a  Comment', 'codexin' ),
-		'cancel_reply_link' => __( 'Cancel Comment', 'codexin' ),	
-		'comment_field' => '<div class="comment-form-comment"><fieldset>' . '<textarea id="comment" placeholder="' . __( 'Your Comment', 'codexin' ) . ( $req ? ' *' : '' ) . '" name="comment" cols="45" rows="8" aria-required="true"></textarea></fieldset></div>',
-		'label_submit' => __( 'Submit Comment', 'codexin' ),
-		'id_submit' => 'submit_my_comment'
+		'fields' => apply_filters( 'comment_form_default_fields', 
+			array(			
+				'comment_notes_after'	=> '',	
+				'author' 				=> 
+					'<div class="row">
+						<div class="col-12 col-sm-12 col-md-4">
+							<div class="comment-form-author">
+								<fieldset>
+									<input id="author" name="author" type="text" placeholder="'.esc_html__( 'Name', 'TEXT_DOMAIN' ). ( $req ? ' *' : '' ).'" value="' . esc_attr( $commenter['comment_author'] ) . '" size="30"' . $aria_req . ' />
+								</fieldset>
+							</div>
+						</div>',
+				'email' 				=> 
+					'<div class="col-12 col-sm-12 col-md-4">
+						<div class="comment-form-email">
+							<fieldset>
+								<input id="email" name="email" type="text" value="' . esc_attr(  $commenter['comment_author_email'] ) . '" size="30" placeholder="'. esc_html__( 'Email', 'TEXT_DOMAIN' ) . ( $req ? ' *' : '' ) .'" ' . $aria_req . ' />
+							</fieldset>
+						</div>
+					</div>',
+				'url' 					=> 
+					'<div class="col-12 col-sm-12 col-md-4">
+						<div class="comment-form-url">
+							<fieldset>
+								<input id="url" name="url" type="text" value="' . esc_attr( $commenter['comment_author_url'] ) . '" placeholder="'.esc_html__( 'Website', 'TEXT_DOMAIN' ).'" size="30" />
+							</fieldset>
+						</div>
+					</div>
+				</div>'
+			)
+		),
+		'comment_notes_before' 			=> '',
+		'comment_notes_after' 			=> '',
+		'title_reply' 					=> esc_html__( 'Leave a Comment', 'TEXT_DOMAIN' ),
+		'title_reply_to' 				=> esc_html__( 'Leave a  Comment', 'TEXT_DOMAIN' ),
+		'cancel_reply_link' 			=> esc_html__( 'Cancel Comment', 'TEXT_DOMAIN' ),	
+		'comment_field' 				=> 
+			'<div class="comment-form-comment">
+				<fieldset>' . '<textarea id="comment" placeholder="' . esc_html__( 'Your Comment', 'TEXT_DOMAIN' ) . ( $req ? ' *' : '' ) . '" name="comment" cols="45" rows="8" aria-required="true"></textarea>
+				</fieldset>
+			</div>',
+		'label_submit' 					=> esc_html__( 'Submit Comment', 'TEXT_DOMAIN' ),
+		'id_submit' 					=> 'submit_my_comment'
 		
 	));
-
-
 	?>
-
-</div><!-- #comments -->
+</div><!-- end of #comments -->

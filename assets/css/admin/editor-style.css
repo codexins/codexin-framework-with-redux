@@ -82,7 +82,6 @@ body.rtl blockquote {
 	border-right-style: solid;
 	}
 	
-/* TODO: replace font-size by Theme Options values */
 h1 { font-size: 36px; }
 h2 { font-size: 32px; }
 h3 { font-size: 28px; }

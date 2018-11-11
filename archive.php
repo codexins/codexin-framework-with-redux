@@ -1,69 +1,61 @@
-<?php get_header(); ?>
+<?php
 
-<div id="content" class="section site-content">
+/**
+ *
+ * The template for displaying archives pages
+ *
+ * @package     Codexin
+ * @subpackage  Templates
+ * @since       1.0
+ */
+
+// Do not allow directly accessing this file.
+defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directly.', 'TEXT_DOMAIN' ) );
+
+get_header() ?>
+
+<!-- Start of Main Content Wrapper -->
+<div id="content" class="main-content-wrapper">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-9 col-md-8">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-9">
 				<main id="primary" class="site-main">
-		
-					<?php if ( have_posts() ) : ?>
-					<?php while ( have_posts() ) : the_post() ?>
+					<div class="blog-area">
+						<?php 
+						if ( have_posts() ) { 
 
-					<div id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
-						<?php if(has_post_thumbnail()): ?>
-								<div class="image-featured">
-										<?php the_post_thumbnail(); ?>
-								</div>
-						<?php endif; ?>
+							// Start the loop
+							while ( have_posts() ) {
+								the_post();
 
-						<h2 class="post-title"><a href="<?php the_permalink() ?>"><?php the_title()?></a></h2>
-						<div class="post-meta">	
-							<div class="post-author"><i class="fa fa-pencil"></i> <?php the_author(); ?></div>
-							<div class="post-cats"><i class="fa fa-tag"></i><?php the_category( ', ' )?></div>
-							<div class="post-time"><i class="fa fa-calendar"></i> <?php the_time(get_option('date_format')); ?></div>
-							<div class="post-comments"><i class="fa fa-comment"></i><?php comments_number( 'No Comments', 'One Comment', '% Comments' )?></div>
-						</div>
-				
-						<div class="post-excerpt"><?php the_excerpt() ?></div>
+								// Load the Post-Format-specific template for the content.
+								get_template_part( 'template-parts/post/content', get_post_format() );
+							}
+						} else { 
+							// No posts to display
+						}
+						?>
+					</div> <!-- end of blog-area -->
 
-						<?php if(!is_single()):  ?>
-								<div class="read-more">
-										<a href="<?php the_permalink(); ?>">Read More</a>
-								</div>
-						<?php endif; ?>
+					<?php
 
-				        <?php if(has_tag()): ?>
-
-					    		<div class="post-tag">
-			    			 			<?php the_tags('Tags: &nbsp;',' ',''); ?>
-					    		</div>
-				         <?php endif; ?>
-
-			
-					</div> <!-- end of .post-item -->
-
-					<?php endwhile ?>
-					<?php else : ?>
-
-					<?php // No posts to display ?>
-
-					<?php endif ?>
-
+					// Rendering Pagination
+					codexin_posts_nav();
+					?>
 				</main> <!-- end of #primary -->
-
-					<?php codexin_posts_navigation(); ?>
-			</div><?php // .col-sm-9 ?>
-
-			<div class="col-sm-3 col-md-3 col-md-offset-1">
-				<aside id="secondary" class="widget-area">
-					<?php get_sidebar() ?>
-				</aside>
 			</div>
-	
-		</div>
-	
-	</div>
 
+			<div class="col-12 col-sm-12 col-md-12 col-lg-4 col-xl-3">
+				<aside id="secondary" class="widget-area">
+					<?php 
+					// Get active assigned sidebar
+					get_sidebar();
+					?>
+				</aside> <!-- end of #secondary -->
+			</div>
+		</div>
+	</div> <!-- end of container -->
 </div>
+<!-- End of Main Content Wrapper -->
 
 <?php get_footer() ?>

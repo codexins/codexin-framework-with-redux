@@ -1,66 +1,56 @@
-<?php get_header() ?>
+<?php
+/**
+ *
+ * The template for displaying search results pages
+ *
+ * @package 	Codexin
+ * @subpackage 	Templates
+ * @since 		1.0
+ */
 
-<div id="content" class="section site-content">
+
+// Do not allow directly accessing this file.
+defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directly.', 'TEXT_DOMAIN' ) );
+
+get_header(); ?>
+
+<!-- Start of Main Content Wrapper -->
+<div id="content" class="main-content-wrapper">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12">
+			<div class="col-12 col-sm-12 col-md-12 col-lg-12">
 				<main id="primary" class="site-main">
-		
-					<?php if ( have_posts() ) : ?>
-					<h1 class="search-title"><?php printf( __( 'Search Results for: %s', 'codexin' ), '<span>"' . get_search_query() . '"</span>' ); ?></h1>
-					<?php while ( have_posts() ) : the_post() ?>
+					<div class="blog-area">
+						<?php 
+						if ( have_posts() ) { 
 
-					<div id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
-						<?php if(has_post_thumbnail()): ?>
-								<div class="image-featured">
-										<?php the_post_thumbnail(); ?>
-								</div>
-						<?php endif; ?>
-						
-						<h2 class="post-title"><a href="<?php the_permalink() ?>"><?php the_title()?></a></h2>
-						<div class="post-meta">	
-							<div class="post-author"><i class="fa fa-pencil"></i> <?php the_author(); ?></div>
-							<div class="post-cats"><i class="fa fa-tag"></i><?php the_category( ', ' )?></div>
-							<div class="post-time"><i class="fa fa-calendar"></i> <?php the_time(get_option('date_format')); ?></div>
-							<div class="post-comments"><i class="fa fa-comment"></i><?php comments_number( 'No Comments', 'One Comment', '% Comments' )?></div>
-						</div>
-				
-						<div class="post-excerpt"><?php the_excerpt() ?></div>
+							// Start the loop
+							while ( have_posts() ) {
+								the_post();
 
-						<?php if(!is_single()):  ?>
-								<div class="read-more">
-										<a href="<?php the_permalink(); ?>">Read More</a>
-								</div>
-						<?php endif; ?>
+								// Load the Post-Format-specific template for the content.
+								get_template_part( 'template-parts/post/content', get_post_format() );
+							}
+						} else { ?>
+							<h2 class="search-title text-center">
+								<?php esc_html_e( 'Nothing found for the search keyword "'. get_search_query() .'"', 'TEXT_DOMAIN' ); ?>
+							</h2>
+							<p><?php esc_html_e( 'Please use the menu above to locate what you are searching for. Or you can try searching with a keyword below:', 'TEXT_DOMAIN' ) ?></p>
+							<?php get_search_form();
+						}
+						?>
+					</div> <!-- end of blog-area -->
 
-				        <?php if(has_tag()): ?>
+					<?php
 
-					    		<div class="post-tag">
-			    			 			<?php the_tags('Tags: &nbsp;',' ',''); ?>
-					    		</div>
-				         <?php endif; ?>
-
-			
-					</div> <!-- end of .post-item -->
-
-					<?php endwhile ?>
-					<?php else : ?>
-
-					<h2 class="search-title text-center"><?php _e( 'Nothing found for the search keyword "'. get_search_query() .'"', 'codexin' ); ?></h2>
-					<p class="text-center">Please use the menu above to locate what you are searching for. Or you can try searching with another keyword below:</p>
-					<?php get_search_form(); ?>
-
-					<?php endif ?>
-
+					// Rendering Pagination
+					codexin_posts_nav();
+					?>
 				</main> <!-- end of #primary -->
-
-					<?php codexin_posts_navigation(); ?>
-			</div><?php // .col-xs-12 ?>
-	
-		</div><?php // #content .container .row ?>
-	
-	</div><?php // #content .container ?>
-
-</div><?php // #content ?>
+			</div>
+		</div>
+	</div> <!-- end of container -->
+</div>
+<!-- End of Main Content Wrapper -->
 
 <?php get_footer() ?>
