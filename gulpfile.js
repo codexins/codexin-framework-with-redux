@@ -531,6 +531,19 @@ gulp.task('buildZip', () => {
 	 		.pipe(notify({ message: '✅  Zip task complete', onLast: true }));
 });
 
+
+/**
+ * Build files from scratch Task.
+ *
+ * Build final Zip file from the Build directory in root
+ */
+gulp.task(
+    'buildDist', 
+    gulp.series('clean', 'buildStyles', 'buildShortcodes', 'vendorsJS', 'customJS', 'buildFiles', 'buildImages', function (done) {
+        done();
+    })
+);
+
 /**
  * Build Zip from scratch Task.
  *

@@ -60,6 +60,7 @@ module.exports = {
 
 		// exclude files and folders
 		'!node_modules/**/*',
+		'!dist/**/*',
 		'!*.css',
 		'!codexin.config.js',
 		'!gulpfile.js',
