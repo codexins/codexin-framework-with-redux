@@ -1,55 +1,48 @@
-<?php // Template Name: Page (No Side Bar) ?>
-<?php get_header() ?>
+<?php
+/**
+ * Template Name: Page - No Sidebar
+ *
+ * @package Codexin
+ * @subpackage Template
+ */
 
-<div id="content" class="section site-content">
+// Do not allow directly accessing this file.
+defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directly.', 'TEXT_DOMAIN' ) );
+
+get_header(); ?>
+
+<!-- Start of Main Content Wrapper -->
+<div id="content" class="main-content-wrapper">
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-12">
-				<div id="primary" class="site-main">
+			<div class="col-12 col-sm-12 col-md-12">
+				<main id="primary" class="site-main">
 					<?php 
-					if ( have_posts() ) : 
-						while ( have_posts() ) : the_post();
-							if ( !empty ( get_the_content() ) ) : ?>
+					if ( have_posts() ) { 
 
-							<div id="page-<?php the_ID(); ?>" <?php post_class(array('clearfix', 'page-entry-content')); ?>>
-									<?php 
-										the_content(); 
+						// Start the loop
+						while ( have_posts() ) {
+							the_post();
 
-										// This section is for pagination purpose for a long large page that is seperated using nextpage tags
-							            $args = array(
-							                'before'      => '<div class="page-links"><span class="page-links-title">' . esc_html__( 'Pages:', 'codexin' ) . '</span>',
-							                'after'       => '</div>',
-							                'link_before' => '<span>',
-							                'link_after'  => '</span>',
-							                'pagelink'    => '<span class="screen-reader-text">' . esc_html__( 'Page', 'codexin' ) . ' </span>%',
-							                'separator'   => '<span class="screen-reader-text">, </span>',
-							            );                 
-							            wp_link_pages( $args );
-									 ?>
-									 
-							</div><!-- #page-## -->
-
-							<?php
-							else :
-							endif;
-
-						endwhile;
-					else : 
+							// Load the page content template
+							get_template_part( 'template-parts/page/content', 'page' );
+						}
+					} else { 
 						// No posts to display
-					endif;
+					}
 					?>
-					
-				</div> <!-- end of #primary -->
+				</main> <!-- end of #primary -->
 
 				<?php
 				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) :
+				if ( comments_open() || get_comments_number() ) {
 					comments_template();
-				endif;
+				}
 				?>
-			</div><?php // .col-xs-12 ?>
+			</div>
+		</div>
+	</div> <!-- end of container -->
+</div>
+<!-- End of Main Content Wrapper -->
 
-		</div><?php // #content .container .row ?>
-	</div><?php // #content .container ?>
-</div><?php // #content ?>
-<?php get_footer() ?>
+<?php get_footer(); ?>

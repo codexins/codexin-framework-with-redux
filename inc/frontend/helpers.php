@@ -70,7 +70,7 @@ if ( ! function_exists( 'codexin_comment_function' ) ) {
 
         $GLOBALS['comment'] = $comment; ?>
 
-        <li id="li-comment-<?php comment_ID() ?>">
+        <li id="li-comment-<?php comment_ID(); ?>">
             <div id="comment-<?php comment_ID(); ?>" class="comment-body">
                 <div class="comment-single">
                     <div class="comment-single-left comment-author vcard">
@@ -85,11 +85,11 @@ if ( ! function_exists( 'codexin_comment_function' ) ) {
 
                         <div class="comment-meta">
                             <a href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ) ?>">
-                                <time datetime="<?php echo get_the_time('c'); ?>" itemprop="datePublished">
-                                    <?php printf( esc_html__('%1$s at %2$s', 'reveal'), get_comment_date(),  get_comment_time() ); ?>
+                                <time datetime="<?php the_time('c'); ?>" itemprop="datePublished">
+                                    <?php printf( esc_html__('%1$s at %2$s', 'TEXT_DOMAIN'), get_comment_date(), get_comment_time() ); ?>
                                 </time>
                             </a>
-                            <?php edit_comment_link( esc_html__( '(Edit)', 'reveal' ),'  ','' ) ?>
+                            <?php edit_comment_link( esc_html__( '(Edit)', 'TEXT_DOMAIN' ),'  ','' ) ?>
                             <span class="comment-reply">
                                 <?php 
                                 comment_reply_link( array_merge( $args, 
@@ -104,7 +104,7 @@ if ( ! function_exists( 'codexin_comment_function' ) ) {
                         </div>
 
                         <?php if ($comment->comment_approved == '0') { ?>
-                            <div class="moderation-notice"><em><?php echo esc_html__('Your comment is awaiting moderation.', 'reveal') ?></em></div>
+                            <div class="moderation-notice"><em><?php echo esc_html__('Your comment is awaiting moderation.', 'TEXT_DOMAIN') ?></em></div>
                         <?php } ?>
 
                     </div>
@@ -203,6 +203,22 @@ if ( ! function_exists( 'codexin_adjust_color_brightness' ) ) {
     }
 }
 
+if ( ! function_exists( 'codexin_title_background' ) ) {
+    /**
+     * Helper function to return page tile background url
+     *
+     * @since   v1.0
+     */
+    function codexin_title_background() {
+        $header_bg = codexin_meta( 'codexin_page_background' ); 
+
+        if( empty( $header_bg ) ) {
+            return;
+        }
+        return rwmb_the_value( $header_bg, '', '', false );
+    }
+}
+
 
 if ( ! function_exists( 'codexin_get_page_title' ) ) {
     /**
@@ -214,13 +230,37 @@ if ( ! function_exists( 'codexin_get_page_title' ) ) {
      * @since   v1.0
      */
     function codexin_get_page_title( $title, $id = null ) {
+
+        $alignment = codexin_get_option( 'cx_page_title_position' );
+        $bcrumb    = codexin_get_option( 'cx_bcrumbs' );
+        $page_bg   = ( ! empty( codexin_meta( 'codexin_page_background' ) ) ) ? rwmb_the_value( 'codexin_page_background', '', '', false ) : '';
+        $alignment_single = codexin_meta( 'codexin_page_title_alignment' );
+
+        if( is_page() ) {
+            $title_position = ( ! empty( $alignment_single ) ) && ( $alignment_single == 'global' ) ? $alignment : $alignment_single;
+        } else {
+            $title_position = $alignment;
+        } // end of page conditional check
+
+        if( $title_position == 'left' ) {
+            $alignment_class = ' text-md-left';
+        } elseif( $title_position == 'right' ) {
+            $alignment_class = ' text-md-right';
+        } else {
+            $alignment_class = '';
+        }
+
         ?>
         <!-- Start of Page Title -->
-        <div id="page_title">
+        <div id="page_title" class="page-title" style="<?php echo esc_attr( $page_bg ); ?>">
             <div class="container">
                 <div class="row">
                     <div class="col-12 col-sm-12 col-md-12">
-                        <h1><?php echo wp_kses_post( $title ); ?></h1>   
+                        <h1 class="text-center<?php echo esc_attr( $alignment_class ); ?>"><?php echo wp_kses_post( $title ); ?></h1>
+                        <?php 
+                        // Rendering Breadcrumbs
+                        echo ( $bcrumb ) ? codexin_breadcrumbs() : '';
+                        ?>
                     </div>
                 </div>
             </div>
@@ -257,5 +297,83 @@ if ( ! function_exists( 'codexin_char_limit' ) ) {
         } else {
             return $content;
         }
+    }
+}
+
+if ( ! function_exists( 'codexin_default_google_fonts' ) ) {
+    /**
+     * Register Google fonts fallback if not set from theme options.
+     *
+     * @return    string      Google fonts URL.
+     * @since     v1.0.0
+     */
+    function codexin_default_google_fonts() {
+        $fonts_url = '';
+        $fonts     =  apply_filters( 'codexin_default_google_fonts', array( 'Rubik:300,300i,400,400i,500,500i,700,700i,900,900i', 'Montserrat+Roboto:400,700' ) );
+        if ( $fonts ) {
+            $subsets   = apply_filters( 'codexin_default_google_fonts', 'latin' );
+            $fonts_url = add_query_arg( array(
+                'family' => implode( '%7C', $fonts ),
+                'subset' => urlencode( $subsets ),
+            ),  'https://fonts.googleapis.com/css' );
+        }
+        return $fonts_url;
+    }
+}
+
+if ( ! function_exists( 'codexin_attachment_metas' ) ) {
+    /**
+     * Helper Function to get some meta data from attachments
+     *
+     * @param   int        $post_id    The ID of the attachment
+     * @return  array
+     * @since   v1.0
+     */
+    function codexin_attachment_metas( $attachment_id = null ) {
+
+        $metas = array();
+
+        $attachment         = wp_prepare_attachment_for_js( $attachment_id );
+        $metas['width']     = $attachment['width'];
+        $metas['height']    = $attachment['height'];
+        $metas['size']      = $attachment['width'] . 'x' . $attachment['height'];
+        $metas['alt']       = ( ! empty( $attachment['alt'] ) ) ? 'alt="' . esc_attr( $attachment['alt'] ) . '"' : 'alt="' .get_the_title() . '"';
+        $metas['caption']   = ( ! empty( $attachment['caption'] ) ) ? $attachment['caption'] : '';
+
+        return $metas;
+    }
+}
+
+if ( ! function_exists( 'codexin_get_smart_slider' ) ) {
+    /**
+     * Helper Function to get smart slider
+     *
+     * @since   v1.0
+     */
+    function codexin_get_smart_slider() {
+
+        $result = '';
+        if( is_page_template( 'page-templates/page-home.php' ) ) {
+            if ( class_exists( 'SmartSlider3' ) ) {
+
+                $slider_id = codexin_meta( 'codexin_page_slider' ); 
+
+                $result .= '<div class="slider-wrapper">';
+                    if( ! empty( $slider_id ) ){
+                        $result .= do_shortcode('[smartslider3 slider='. $slider_id .']');
+                    } else {
+                        $result .= sprintf( '<div class="no-slider text-center"><h3>%1$s</h3></div>', esc_html__( 'Please select a \'Slider Name\' from \'Page Edit\' section and click on \'Update\'', 'TEXT_DOMAIN' ) );
+                    }
+                $result .= '</div> <!-- end of slider-wrapper -->';
+
+            } else {
+                $result .= '<div class="no-slider text-center">';
+                    $result .= '<h3>' . esc_html__( 'Oops! Seems Smart Slider Not Activated!', 'TEXT_DOMAIN' ) . '</h3>';
+                    $result .= sprintf( '%1$s<br />%2$s', esc_html__( 'Please install/activate Smart Slider and create the slides. Once completed, assign the slider from \'Page Edit\' settings.', 'TEXT_DOMAIN' ), esc_html__( 'If you don\'t want to use slider, then use another page template, for example \'Page - Full Width\' or any other.', 'TEXT_DOMAIN' ) );
+                $result .= '</div>';
+            }
+        }
+
+        return $result;
     }
 }

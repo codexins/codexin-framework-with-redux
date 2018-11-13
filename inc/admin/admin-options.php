@@ -198,7 +198,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'title'     => esc_html__( 'Body Font', 'TEXT_DOMAIN' ),
                         'subtitle'  => esc_html__( 'Specify the body font properties.', 'TEXT_DOMAIN' ),
                         'google'    => true,
-                        'output'    => array('body'),
+                        'output'    => array( 'body', 'button', 'input', 'textarea' ),
                         'color'     => false,
                         'default'   => array(
                             'font-size'   => '16px',
@@ -215,7 +215,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'subtitle'       => esc_html__( 'Specify Navigation Menu font properties.', 'TEXT_DOMAIN' ),
                         'google'         => true,
                         'text-transform' => true,
-                        'output'         => array('.main-menu li a'),
+                        'output'         => array( '#main_menu li a' ),
                         'color'          => false,
                         'default'        => array(
                             'font-size'         => '14px',
@@ -233,7 +233,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'subtitle' => esc_html__( 'Specify h1 font properties.', 'TEXT_DOMAIN' ),
                         'google'   => true,
                         'color'    => false,
-                        'output'   => array('h1', '.h1'),
+                        'output'   => array( 'h1', '.h1' ),
                         'default'  => array(
                             'font-size'   => '32px',
                             'font-family' => 'Montserrat',
@@ -264,7 +264,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'subtitle' => esc_html__( 'Specify h3 font properties.', 'TEXT_DOMAIN' ),
                         'google'   => true,
                         'color'    => false,
-                        'output'   => array('h3', '.h3'),
+                        'output'   => array( 'h3', '.h3' ),
                         'default'  => array(
                             'font-size'   => '24px',
                             'font-family' => 'Montserrat',
@@ -278,7 +278,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'title'    => esc_html__( 'Typography h4', 'TEXT_DOMAIN' ),
                         'subtitle' => esc_html__( 'Specify h4 font properties.', 'TEXT_DOMAIN' ),
                         'google'   => true,
-                        'output'   => array('h4'),
+                        'output'   => array( 'h4' ),
                         'color'    => false,
                         'default'  => array(
                             'font-size'   => '21px',
@@ -294,7 +294,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'subtitle' => esc_html__( 'Specify h5 font properties.', 'TEXT_DOMAIN' ),
                         'google'   => true,
                         'color'    => false,
-                        'output'   => array('h5', '.h5'),
+                        'output'   => array( 'h5', '.h5' ),
                         'default'  => array(
                             'font-size'   => '18px',
                             'font-family' => 'Montserrat',
@@ -309,7 +309,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'subtitle' => esc_html__( 'Specify h6 font properties.', 'TEXT_DOMAIN' ),
                         'google'   => true,
                         'color'    => false,
-                        'output'   => array('h6', '.h6'),
+                        'output'   => array( 'h6', '.h6' ),
                         'default'  => array(
                             'font-size'   => '15px',
                             'font-family' => 'Montserrat',
@@ -480,7 +480,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'id'                => 'cx_logo_padding',
                         'type'              => 'spacing',
                         'mode'              => 'padding',
-                        'output'            => array( '#header .navbar-brand' ),
+                        'output'            => array( 'header .navbar-brand' ),
                         'units'             => array( 'px' ),
                         'units_extended'    => 'true',
                         'title'             => esc_html__( 'Logo padding', 'TEXT_DOMAIN' ),
@@ -504,11 +504,11 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'title'    => esc_html__( 'Title Position :', 'TEXT_DOMAIN' ),
                         'subtitle' => esc_html__( 'Please Select Page Title Position ', 'TEXT_DOMAIN' ),
                         'options'  => array(
-                            '1' => esc_html__( 'Left', 'TEXT_DOMAIN' ),
-                            '2' => esc_html__( 'Center', 'TEXT_DOMAIN' ),
-                            '3' => esc_html__( 'Right', 'TEXT_DOMAIN' ),
+                            'left'      => esc_html__( 'Left', 'TEXT_DOMAIN' ),
+                            'center'    => esc_html__( 'Center', 'TEXT_DOMAIN' ),
+                            'right'     => esc_html__( 'Right', 'TEXT_DOMAIN' ),
                         ),
-                        'default'  => '1',
+                        'default'  => 'center',
                     ),
 
                     array(
@@ -533,7 +533,6 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'output'   => array( '#page_title.page-title' ),
                     ),
 
-
                     array(
                         'id'       => 'cx_bcrumbs',
                         'type'     => 'switch',
@@ -542,8 +541,6 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'default'  => true
                     ), 
 
-
-
                     array(
                         'id'       => 'cx_bc_position',
                         'type'     => 'radio',
@@ -551,11 +548,11 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'title'    => esc_html__( 'Breadcrumbs Position :', 'TEXT_DOMAIN' ),
                         'subtitle' => esc_html__( 'Please Select BreadCrumbs Position ', 'TEXT_DOMAIN' ),
                         'options'  => array(
-                            '1' => esc_html__( 'Left', 'TEXT_DOMAIN' ),
-                            '2' => esc_html__( 'Center', 'TEXT_DOMAIN' ),
-                            '3' => esc_html__( 'Right', 'TEXT_DOMAIN' ),
+                            'left' => esc_html__( 'Left', 'TEXT_DOMAIN' ),
+                            'center' => esc_html__( 'Center', 'TEXT_DOMAIN' ),
+                            'right' => esc_html__( 'Right', 'TEXT_DOMAIN' ),
                         ),
-                        'default'  => '1',
+                        'default'  => 'center',
                     ),
 
                 ) //End Fields array...
@@ -734,7 +731,24 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         "default"   => true,
                     ),
                 )
-            );  
+            );
+
+            // Social Media
+            $this->sections[] = array(
+                'title'            => esc_html__( 'Social Media', 'TEXT_DOMAIN' ),
+                'customizer_width' => '500px',
+                'id'               => 'codexin_advanced_settings',
+                'icon'             => 'el el-network',
+                'fields'           => array(
+                    array(
+                        'id'        => 'cx_topbar_social_info',
+                        'type'      => 'info',
+                        'style'     => 'success',
+                        'icon'      => 'el el-info-circle',
+                        'title'     => esc_html__( 'Social Media Information ', 'TEXT_DOMAIN' ),
+                        'desc'      => sprintf( '%1$s<b><a href="%2$s" target="_blank">%3$s</a></b>', esc_html__('In order to set the Social Media Profile Information, ', 'TEXT_DOMAIN'), esc_url(admin_url().'admin.php?page=codexin-options&action=social'), 'please click here.' ),
+                    ),
+            ) );
 
             // footer section 
             $this->sections[] = array(
@@ -793,9 +807,9 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                         'default'  => esc_html__( 'Copyright &copy; 2017. All Right Reserved.', 'TEXT_DOMAIN' )
                     ),
                 )
-
             ); //End Footer...
 
+            // Advanced Settings
             $this->sections[] = array(
                 'title'            => esc_html__( 'Advanced Settings', 'TEXT_DOMAIN' ),
                 'customizer_width' => '500px',
@@ -804,6 +818,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                 'fields'           => array(
             ) );
 
+            // Custom CSS
             $this->sections[] = array(
                 'id'            => 'cx_advanced_css',
                 'title'         => esc_html__( 'Custom CSS', 'TEXT_DOMAIN' ),
@@ -822,6 +837,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                 )
             );
 
+            // Custom JS
             $this->sections[] = array(
                 'id'            => 'cx_advanced_js',
                 'title'         => esc_html__( 'Custom JS', 'TEXT_DOMAIN' ),
@@ -841,6 +857,7 @@ if ( ! class_exists( 'Codexin_Admin' ) ) {
                 )
             );
 
+            // Custom Tracking Code
             $this->sections[] = array(
                 'id'            => 'cx_advanced_tracking',
                 'title'         => esc_html__( 'Tracking Code', 'TEXT_DOMAIN' ),

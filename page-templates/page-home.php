@@ -1,43 +1,37 @@
-<?php // Template Name: Page (Home Page) ?>
-<?php get_header() ?>
+<?php
+/**
+ * Template Name: Page - Home Page
+ *
+ * @package Codexin
+ * @subpackage Template
+ */
 
-<div id="content" class="section site-content">
+// Do not allow directly accessing this file.
+defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directly.', 'TEXT_DOMAIN' ) );
+
+get_header(); ?>
+
+<!-- Start of Main Content Wrapper -->
+<div id="content" class="main-content-wrapper">
 	<div id="home">
-			<div id="primary" class="site-main">
-				<?php 
-				if ( have_posts() ) : 
-					while ( have_posts() ) : the_post();
-						if ( !empty ( get_the_content() ) ) : ?>
+		<main id="primary" class="site-main">
+			<?php 
+			if ( have_posts() ) { 
 
-						<div id="page-<?php the_ID(); ?>" <?php post_class(array('clearfix', 'page-entry-content')); ?>>
-								<?php 
-									the_content(); 
+				// Start the loop
+				while ( have_posts() ) {
+					the_post();
 
-
-												// This section is for pagination purpose for a long large page that is seperated using nextpage tags
-						            $args = array(
-						                'before'      => '<div class="page-links"><span class="page-links-title">' . esc_html__( 'Pages:', 'codexin' ) . '</span>',
-						                'after'       => '</div>',
-						                'link_before' => '<span>',
-						                'link_after'  => '</span>',
-						                'pagelink'    => '<span class="screen-reader-text">' . esc_html__( 'Page', 'codexin' ) . ' </span>%',
-						                'separator'   => '<span class="screen-reader-text">, </span>',
-						            );                 
-						            wp_link_pages( $args );
-
-								 ?>
-						</div><!-- #post-## -->
-
-						<?php
-						else :
-						endif;
-
-					endwhile;
-				else : 
-					// No posts to display
-				endif;
-				?>
-			</div> <!-- end of #primary -->
+					// Load the page content template
+					get_template_part( 'template-parts/page/content', 'page' );
+				}
+			} else { 
+				// No posts to display
+			}
+			?>
+		</main> <!-- end of #primary -->
 	</div> <!-- end of #home -->
-</div><?php // #content ?>
+</div>
+<!-- End of Main Content Wrapper -->
+
 <?php get_footer() ?>

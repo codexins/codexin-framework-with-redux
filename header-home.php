@@ -1,11 +1,19 @@
-	<div id="showcase" class="section">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-12">
-					<h1>WELCOME TO CODEXIN THEME<br/>PLEASE USE CHILD THEME TO BUILD SITES</h1>	
-					<?php echo do_shortcode('[spacer size="40"]'); ?>
-					<?php echo do_shortcode('[button type="4" button_txt="REQUEST A FREE QUOTE" href="" class="text-center"]'); ?>
-				</div>
-			</div>
-		</div>
-	</div>
+<?php
+/**
+ * The template for displaying the header slider
+ *
+ * Contains the smart slider selectable from dashboard
+ *
+ * @package 	Codexin
+ * @subpackage 	Templates
+ * @since 		1.0
+ */
+
+?>
+
+<div id="primary_slider" class="primary-slider">
+	<?php 
+	// Get the slider
+	echo codexin_get_smart_slider();
+	?>
+</div>

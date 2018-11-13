@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template part for displaying posts
+ * Template part for displaying autio posts
  *
  * @package 	Codexin
  * @subpackage 	Core
@@ -16,25 +16,21 @@ $title_length    = codexin_get_option( 'cx_title_length' );
 $excerpt_length  = codexin_get_option( 'cx_excerpt_length' );
 $read_more       = codexin_get_option( 'cx_blog_read_more' );
 $social_share 	 = codexin_get_option( 'cx_single_share' );
+$audio 			 = codexin_meta( 'codexin_audio' );
 
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'post-item' ); ?>>
 	<div class="post-content-wrapper">
-		<?php
+		<?php 
 		if ( ! post_password_required() ) {
-			if( has_post_thumbnail() ) { ?>
-				<div class="post-media">
-					<?php 
-					echo ( ! is_single() ) ? '<a href="' . esc_url( get_the_permalink() ) . '">' : '';
-						the_post_thumbnail( 'codexin-fr-rect-two' );
-					echo ( ! is_single() ) ? '</a>' : '';
-					?>
-				</div> <!-- end of post-media -->
-			<?php 
+			if( ! empty( $audio ) ) {		    
+			    echo '<div class="fluid-wrapper">';
+			        echo sprintf( '%s', $audio );
+			    echo '</div> <!-- end of fluid-wrapper -->';
 			}
-		} ?>
-
+		} // end of password check condition
+		?>
 		<div class="post-content">
 			<h2 class="post-title">
 				<?php if( ! is_single() ) { ?>

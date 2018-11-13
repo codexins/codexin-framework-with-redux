@@ -36,7 +36,7 @@ if( ! function_exists( 'codexin_color_settings' ) ) {
 
         // Building up the css selectors
         $body_bg_selectors = array(
-            
+            'body'
         );
         $text_color_selectors = array(
             

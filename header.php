@@ -96,14 +96,16 @@ defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directl
 			</div> <!-- end of header-top -->
 
 			<?php 
-			if ( is_front_page() ) {
+			if( is_page_template( 'page-templates/page-home.php' ) ) {
 
 				// Get the Slider
 				get_header( 'home' ); 
 			} else {
 
-				// Get the Page Title
-				get_template_part( 'template-parts/header/page', 'title' );
+				if( codexin_meta( 'codexin_disable_page_title' ) == 0 ) {
+					// Get the Page Title
+					get_template_part( 'template-parts/header/page', 'title' );
+				}
 			}
 			?>
 		</header>

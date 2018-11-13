@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template part for displaying posts
+ * Template part for displaying autio posts
  *
  * @package 	Codexin
  * @subpackage 	Core
@@ -16,25 +16,30 @@ $title_length    = codexin_get_option( 'cx_title_length' );
 $excerpt_length  = codexin_get_option( 'cx_excerpt_length' );
 $read_more       = codexin_get_option( 'cx_blog_read_more' );
 $social_share 	 = codexin_get_option( 'cx_single_share' );
+$link_url        = codexin_meta( 'codexin_link_url' );
+$link_txt        = codexin_meta( 'codexin_link_text' );
+$link_rel        = codexin_meta( 'codexin_link_rel' ); 
+$link_target     = codexin_meta( 'codexin_link_target' );
+$text            = ( ! empty( $link_txt ) ) ? $link_txt : get_the_title();
+$relation        = ( ! empty( $link_rel ) ) ? 'rel="'. esc_attr( $link_rel ) .'"' : '';
+$target          = ( $link_target == '_self' ) ? 'target="'. esc_attr( '_self' ) .'"' : 'target="'. esc_attr( '_blank' ) .'"';
 
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'post-item' ); ?>>
 	<div class="post-content-wrapper">
-		<?php
+		<?php 
 		if ( ! post_password_required() ) {
-			if( has_post_thumbnail() ) { ?>
-				<div class="post-media">
-					<?php 
-					echo ( ! is_single() ) ? '<a href="' . esc_url( get_the_permalink() ) . '">' : '';
-						the_post_thumbnail( 'codexin-fr-rect-two' );
-					echo ( ! is_single() ) ? '</a>' : '';
-					?>
-				</div> <!-- end of post-media -->
-			<?php 
-			}
-		} ?>
-
+		    echo '<div class="post-link">';
+		        echo '<a href="'. esc_url( $link_url ) .'" '. sprintf( '%s', $relation ) .' '. sprintf( '%s', $target ) .'">';
+		            echo '<div class="post-format-link">';
+		                echo '<i class="fa fa-link"></i>';
+		                echo '<p>'. esc_html( $text ) .'</p>';
+		            echo '</div>';
+		        echo '</a>';
+		    echo '</div>';
+		} // end of password check condition
+		?>
 		<div class="post-content">
 			<h2 class="post-title">
 				<?php if( ! is_single() ) { ?>

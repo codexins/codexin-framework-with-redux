@@ -35,6 +35,22 @@ if( ! function_exists( 'codexin_breadcrumbs' ) ) {
         $page_addon       = '';
         $breadcrumb_trail = '';
         $category_links   = '';
+        $bcrumb_alignment = codexin_get_option( 'cx_bc_position' );
+        $bcrumb_single    = codexin_meta( 'codexin_page_breadcrumb_alignment' );
+
+        if( is_page() ) {
+            $bcrumb_position = ( ! empty( $bcrumb_single ) ) && ( $bcrumb_single == 'global' ) ? $bcrumb_alignment : $bcrumb_single;
+        } else {
+            $bcrumb_position = $bcrumb_alignment;
+        } // end of page conditional check
+
+        if( $bcrumb_position == 'left' ) {
+            $bcrumb_alignment_class = ' justify-content-md-start';
+        } elseif( $bcrumb_position == 'right' ) {
+            $bcrumb_alignment_class = ' justify-content-md-end';
+        } else {
+            $bcrumb_alignment_class = '';
+        }
 
         /** 
          * Set our own $wp_the_query variable. Do not use the global variable version due to 
@@ -148,7 +164,7 @@ if( ! function_exists( 'codexin_breadcrumbs' ) ) {
 
             } elseif ( is_author() ) {
 
-                $breadcrumb_trail = esc_html__( 'Articles Posted by ', 'TEXT_DOMAIN') .  $before . $queried_object->data->display_name . $after;
+                $breadcrumb_trail = esc_html__( 'Articles Posted by&nbsp;', 'TEXT_DOMAIN') .  $before . $queried_object->data->display_name . $after;
 
             } elseif ( is_date() ) {
                 // Set default variables
@@ -207,7 +223,7 @@ if( ! function_exists( 'codexin_breadcrumbs' ) ) {
         }
 
         $breadcrumb_output_link  = '';
-        $breadcrumb_output_link .= '<div class="breadcrumb">';
+        $breadcrumb_output_link .= '<nav class="breadcrumb justify-content-center'. esc_attr( $bcrumb_alignment_class ) .'">';
         if ( is_home() && !is_front_page() ) {
             if ( is_paged() ) {
                 $breadcrumb_output_link .= '<a href="' . $home_link . '">' . $home_text . '</a>'.$delimiter. esc_html( codexin_get_option( 'cx_blog_title' ) );
@@ -224,9 +240,8 @@ if( ! function_exists( 'codexin_breadcrumbs' ) ) {
             $breadcrumb_output_link .= $breadcrumb_trail;
             $breadcrumb_output_link .= $page_addon;
         }
-        $breadcrumb_output_link .= '</div> <!-- enf of breadcrumb -->';
+        $breadcrumb_output_link .= '</nav> <!-- end of breadcrumb -->';
 
         return $breadcrumb_output_link;
     }
-
 }

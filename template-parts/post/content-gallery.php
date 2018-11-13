@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Template part for displaying posts
+ * Template part for displaying gallery posts
  *
  * @package 	Codexin
  * @subpackage 	Core
@@ -16,25 +16,34 @@ $title_length    = codexin_get_option( 'cx_title_length' );
 $excerpt_length  = codexin_get_option( 'cx_excerpt_length' );
 $read_more       = codexin_get_option( 'cx_blog_read_more' );
 $social_share 	 = codexin_get_option( 'cx_single_share' );
+$gallery 		 = codexin_meta( 'codexin_gallery', 'size=codexin-fr-rect-two' );
 
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'post-item' ); ?>>
 	<div class="post-content-wrapper">
-		<?php
-		if ( ! post_password_required() ) {
-			if( has_post_thumbnail() ) { ?>
-				<div class="post-media">
-					<?php 
-					echo ( ! is_single() ) ? '<a href="' . esc_url( get_the_permalink() ) . '">' : '';
-						the_post_thumbnail( 'codexin-fr-rect-two' );
-					echo ( ! is_single() ) ? '</a>' : '';
-					?>
-				</div> <!-- end of post-media -->
-			<?php 
+		<?php 
+		if ( ! post_password_required() ) { 
+			if( ! empty( $gallery ) ) { 
+				echo ( ! is_single() ) ? '<a href="' . esc_url( get_the_permalink() ) . '">' : ''; ?>
+	                <div class="element-carousel" data-visible-slide="1" data-visible-xl-slide="1" data-visible-lg-slide="1" data-visible-md-slide="1" data-visible-sm-slide="1" data-loop="true" data-autoplay-delay="5000" data-effect="fade">
+	                    <div class="swiper-wrapper">
+	                    	<?php 
+	                    	foreach( $gallery as $single_image ) { 
+								// Fetching the attachment properties
+								$image_prop  = codexin_attachment_metas( $single_image['ID'] );
+								echo '<div class="swiper-slide">';
+									echo '<img src="' . esc_url( $single_image['url'] ) . '" alt="' . esc_attr( $image_prop['alt'] ) . '">';
+								echo '</div> <!-- end of swiper-slide -->';
+		                    } ?>
+	                    </div> <!-- end of swiper-wrapper -->
+	                    <div class="swiper-arrow prev fa fa-angle-left"></div>
+	                    <div class="swiper-arrow next fa fa-angle-right"></div>
+	                </div> <!-- end of element-carousel -->
+				<?php
+				echo ( ! is_single() ) ? '</a>' : '';
 			}
-		} ?>
-
+		} // end of password check condition ?>
 		<div class="post-content">
 			<h2 class="post-title">
 				<?php if( ! is_single() ) { ?>

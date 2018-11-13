@@ -8,93 +8,95 @@
  * @since 		1.0
  */
 
-
 // Do not allow directly accessing this file.
 defined( 'ABSPATH' ) OR die( esc_html__( 'This script cannot be accessed directly.', 'TEXT_DOMAIN' ) );
 
-get_header(); ?>
+get_header(); 
 
-<div id="content" class="section site-content">
+$layout          	= ! empty( codexin_get_option( 'cx_single_layout' ) ) ? codexin_get_option( 'cx_single_layout' ) : 'right';
+$column_lg       	= ( $layout == 'left' || $layout == 'right' ) ? '8' : '12';
+$column_xl       	= ( $layout == 'left' || $layout == 'right' ) ? '9' : '12';
+$sidebar_class_lg	= ( $layout == 'no' ) ? '' : '4';
+$sidebar_class_xl	= ( $layout == 'no' ) ? '' : '3';
+$order_class     	= ( $layout == 'left') ? ' order-1 order-md-1 order-lg-2' : '';
+$sb_order_class  	= ( $layout == 'left') ? ' order-2 order-md-2 order-lg-1' : '';
+$pagination 		= codexin_get_option( 'cx_single_button' );
+$post_comment 		= codexin_get_option( 'cx_post_comments' );
+
+?>
+
+<!-- Start of Main Content Wrapper -->
+<div id="content" class="main-content-wrapper">
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-9 col-md-8">
+            <?php 
+
+            // Assigning Wrapper Column for primary content
+            printf(
+                '<div class="col-12 col-sm-12 col-md-12 col-lg-%1$s col-xl-%2$s%3$s">',
+                esc_attr( $column_lg ),
+                esc_attr( $column_xl ),
+                esc_attr( $order_class )
+            );
+
+            ?>
 				<main id="primary" class="site-main">
-		
-					<?php if ( have_posts() ) : ?>
-					<?php while ( have_posts() ) : the_post() ?>
+					<div class="blog-area">
+						<?php 
+						if ( have_posts() ) { 
 
-					<div id="post-<?php the_ID(); ?>" <?php post_class('post-item'); ?>>
-						<?php if(has_post_thumbnail()): ?>
-								<div class="image-featured">
-										<?php the_post_thumbnail(); ?>
-								</div>
-						<?php endif; ?>
+							// Start the loop
+							while ( have_posts() ) {
+								the_post();
 
-						<h2 class="post-title"><?php the_title()?></h2>
-						<div class="post-meta">	
-							<div class="post-author"><i class="fa fa-pencil"></i> <?php the_author(); ?></div>
-							<div class="post-cats"><i class="fa fa-tag"></i><?php the_category( ', ' )?></div>
-							<div class="post-time"><i class="fa fa-calendar"></i> <?php the_time(get_option('date_format')); ?></div>
-							<div class="post-comments"><i class="fa fa-comment"></i><?php comments_number( 'No Comments', 'One Comment', '% Comments' )?></div>
-						</div>
-				
-						<div class="post-excerpt">
-							<?php the_content(); 
+								// Run the post hit counter
+								function_exists( 'codexin_set_post_views' ) ? codexin_set_post_views( get_the_ID() ) : '';
 
-									// This section is for pagination purpose for a long large page that is seperated using nextpage tags
-			            $args = array(
-			                'before'      => '<div class="page-links"><span class="page-links-title">' . esc_html__( 'Pages:', 'codexin' ) . '</span>',
-			                'after'       => '</div>',
-			                'link_before' => '<span>',
-			                'link_after'  => '</span>',
-			                'pagelink'    => '<span class="screen-reader-text">' . esc_html__( 'Page', 'codexin' ) . ' </span>%',
-			                'separator'   => '<span class="screen-reader-text">, </span>',
-			            );                 
-			            wp_link_pages( $args );
-							?>
-							
-						</div> <!-- end of post-excerpt -->
+								// Load the Post-Format-specific template for the content.
+								get_template_part( 'template-parts/post/content', get_post_format() );
+							}
+						} else { 
+							// No posts to display
+						}
+						?>
+					</div> <!-- end of blog-area -->
 
+					<?php
+					// Rendering Pagination
+					echo ( $pagination ) ? codexin_post_nav() : '';
 
-		        <?php if(has_tag()): ?>
-			    		<div class="post-tag">
-	    			 			<?php the_tags('Tags: &nbsp;',' ',''); ?>
-			    		</div>
-		         <?php endif; ?>
-
-							<?php do_action('after-single-post-content'); ?>
-					</div> <!-- end of .post-item -->
-
-					<?php endwhile ?>
-					<?php else : ?>
-
-					<?php // No posts to display ?>
-
-					<?php endif ?>
-
+					if( $post_comment ) {
+						// If comments are open or we have at least one comment, load up the comment template.
+						if ( comments_open() || get_comments_number() ) {
+							comments_template();
+						}
+					}
+					?>
 				</main> <!-- end of #primary -->
+			</div>
 
-				<?php codexin_post_nav(); ?>
-
-				<?php
-				// If comments are open or we have at least one comment, load up the comment template.
-				if ( comments_open() || get_comments_number() ) :
-					comments_template();
-				endif;
-				?>
-
-			</div><?php // .col-sm-9 ?>
-
-			<div class="col-sm-3 col-md-3 col-md-offset-1">
+            <?php 
+            // Checking the need of sidebar
+            if( $layout !== 'no' ) {
+	            // Assigning Wrapper Column for sidebar
+	            printf(
+	                '<div class="col-12 col-sm-12 col-md-12 col-lg-%1$s col-xl-%2$s%3$s">',
+	                esc_attr( $sidebar_class_lg ),
+	                esc_attr( $sidebar_class_xl ),
+	                esc_attr( $sb_order_class )
+	            );
+	            ?>
 				<aside id="secondary" class="widget-area">
-					<?php get_sidebar() ?>
-				</aside>
-			</div><?php // #col-sm-3 ?>
-	
-		</div><?php // #content .container .row ?>
-	
-	</div><?php // #content .container ?>
+					<?php 
+					// Get active assigned sidebar
+					get_sidebar();
+					?>
+				</aside> <!-- end of #secondary -->
+			</div>
+			<?php } // end of sidebar condition check ?>
+		</div>
+	</div> <!-- end of container -->
+</div>
+<!-- End of Main Content Wrapper -->
 
-</div><?php // #content ?>
-
-<?php get_footer() ?>
+<?php get_footer(); ?>

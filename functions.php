@@ -23,21 +23,18 @@ define( 'CODEXIN_THEME_OPTIONS', 'codexin_get_option' );
  * @since 		1.0
  */
 if( ! class_exists( 'Codexin_Framework' ) ) {
-
 	/**
 	 * Main class for the Codexin Themes Framework
 	 * 
 	 * @since v1.0.0
 	 */
 	class Codexin_Framework {
-
 		/**
 		 * Call all loading functions for the theme. They will be started right after theme setup.
 		 * 
 		 * @since v1.0.0
 		 */
 		public function __construct() {
-
 			// Loading the theme framework files
 			$this -> codexin_includes();
 
@@ -58,7 +55,6 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 		 * @since v1.0.0
 		 */
 		public function codexin_includes() {
-
 			/**
 			 * Registering Navigation Menus
 			 *
@@ -126,7 +122,6 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 		* @since v1.0.0
 		*/
 		public function codexin_setup() {
-
 			/**
 			* Add after_setup_theme() for specific functions.
 			* The action call is here, because it fits more just for the theme
@@ -138,10 +133,9 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 * Set content width for custom media information
 			 *
 			 */
-			if ( ! isset( $content_width ) ) {
+			if( ! isset( $content_width ) ) {
 				$content_width = 1140;
 			}
-
 		}
 
 		/**
@@ -150,12 +144,11 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 		 * @since v1.0.0
 		 */
 		public function codexin_setup_core() {
-
 			/**
 			 * Make theme available for translation.
 			 * Translations can be filed in the /languages/ directory.
-			 * If you're building a theme based on reveal, use a find and replace
-			 * to change 'reveal' to the name of your theme in all the template files.
+			 * If you're building a theme based on TEXT_DOMAIN, use a find and replace
+			 * to change 'TEXT_DOMAIN' to the name of your theme in all the template files.
 			 */
 			load_theme_textdomain( 'TEXT_DOMAIN', trailingslashit( get_template_directory() ) . 'languages' );
 
@@ -209,7 +202,7 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 * Enable support for adding custom image sizes
 			 *
 			 */
-			if ( function_exists( 'add_image_size' ) ) {
+			if( function_exists( 'add_image_size' ) ) {
 				add_image_size('codexin-fr-rect-one', 600, 375, true);
 				add_image_size('codexin-fr-rect-two', 800, 354, true);
 				add_image_size('codexin-fr-rect-three', 1170, 400, true);
@@ -261,7 +254,6 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 		 * @since v1.0.0
 		 */
 		public function codexin_actions() {
-
 			/**
 			 * Providing Shortcode Support on text widget
 			 *
@@ -278,7 +270,7 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 * @since 	v1.0
 			 */
 			add_action( 'admin_menu', 'remove_redux_menu',12 );
-			if ( ! function_exists( 'remove_redux_menu' ) ) {
+			if( ! function_exists( 'remove_redux_menu' ) ) {
 				function remove_redux_menu() {
 				    remove_submenu_page( 'tools.php','redux-about' );
 				}
@@ -303,7 +295,7 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 * @since 	v1.0
 			 */
 			add_filter( 'post_thumbnail_html', 'codexin_remove_thumbnail_dimensions', 10, 3 );
-			if ( ! function_exists( 'codexin_remove_thumbnail_dimensions' ) ) {
+			if( ! function_exists( 'codexin_remove_thumbnail_dimensions' ) ) {
 				function codexin_remove_thumbnail_dimensions( $html, $post_id, $post_image_id ) {
 				    $html = preg_replace( '/(width|height)=\"\d*\"\s/', "", $html );
 				    return $html;
@@ -318,7 +310,7 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 * @since 	v1.0
 			 */
 			add_action( 'admin_init', 'codexin_editor_styles' );
-			if ( ! function_exists( 'codexin_editor_styles' ) ) {
+			if( ! function_exists( 'codexin_editor_styles' ) ) {
 				function codexin_editor_styles() {
 					add_editor_style( 'assets/css/admin/editor-style.css' );
 				}
@@ -331,10 +323,10 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 * @uses 	remove_action()
 			 * @since 	v1.0
 			 */
-			if ( ! function_exists( 'remove_demo' ) ) {
+			if( ! function_exists( 'remove_demo' ) ) {
 			    function remove_demo() {
 			        // Used to hide the demo mode link from the plugin page. Only used when Redux is a plugin.
-			        if ( class_exists( 'ReduxFrameworkPlugin' ) ) {
+			        if( class_exists( 'ReduxFrameworkPlugin' ) ) {
 			            remove_filter( 'plugin_row_meta', array(
 			                ReduxFrameworkPlugin::instance(),
 			                'plugin_metalinks'
@@ -353,9 +345,9 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 * @since 	v1.0
 			 */
 			add_action( 'wp_head', 'codexin_pingback_header' );
-			if ( ! function_exists( 'codexin_pingback_header' ) ) {
+			if( ! function_exists( 'codexin_pingback_header' ) ) {
 				function codexin_pingback_header() {
-					if ( is_singular() && pings_open() ) {
+					if( is_singular() && pings_open() ) {
 						printf( '<link rel="pingback" href="%s">' . "\n", get_bloginfo( 'pingback_url' ) );
 					}
 				}
@@ -390,9 +382,46 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 			 */
 			add_filter( 'script_loader_src', 'codexin_remove_script_version', 15, 1 );
 			add_filter( 'style_loader_src', 'codexin_remove_script_version', 15, 1 );
-			function codexin_remove_script_version ( $src ) {
-				$parts = explode( '?ver', $src );
-				return $parts[0];
+			if( ! function_exists( 'codexin_remove_script_version' ) ) {
+				function codexin_remove_script_version ( $src ) {
+					$parts = explode( '?ver', $src );
+					return $parts[0];
+				}
+			}
+
+		    /**
+		     * Add advanced tracking code to header
+		     *
+		     * @uses 	add_action()
+		     * @since 	v1.0
+		     */
+		    add_action( 'wp_head', 'codexin_header_tracking_code', 999 );
+		    if( ! function_exists( 'codexin_header_tracking_code' ) ) {
+			    function codexin_header_tracking_code() {
+			        $advanced_tracking_code = codexin_get_option( 'cx_advanced_tracking_code' );
+			        if( $advanced_tracking_code ) {
+			            printf( '%s', $advanced_tracking_code );
+			        }
+			    }
+			}
+
+		    /**
+		     * Add advanced js to footer
+		     *
+		     * @uses 	add_action()
+		     * @since 	v1.0
+		     */
+		    add_action( 'wp_footer', 'codexin_footer_script', 100 );
+			if( ! function_exists('codexin_footer_script' ) ) {
+			    function codexin_footer_script() {
+			        $advanced_js = codexin_get_option( 'cx_advanced_editor_js' );
+
+			        if( ! empty( $advanced_js ) ) {
+			            echo '<div class="footer-custom-js">';
+			                printf( '<script type="text/javascript">%s</script>', $advanced_js );
+			            echo '</div>';
+			        }
+			    }
 			}
 		}
 
@@ -425,8 +454,8 @@ if( ! class_exists( 'Codexin_Framework' ) ) {
 		 */
 		public function codexin_post_formats_script( $hook ) {
 		    global $post;
-		    if ( $hook == 'post-new.php' || $hook == 'post.php' ) {
-		        if ( 'post' === $post->post_type ) {
+		    if( $hook == 'post-new.php' || $hook == 'post.php' ) {
+		        if( 'post' === $post->post_type ) {
 		            wp_enqueue_script(  'codexin-post-formats', trailingslashit( get_template_directory_uri() ) . 'assets/js/admin/post-format.js' );
 		        }
 		    }

@@ -2,11 +2,11 @@ jQuery(document).ready(function($) {
     "use strict";
 
     var metaboxes = [
-        "#reveal-gallery-meta",
-        "#reveal-video-meta",
-        "#reveal-audio-meta",
-        "#reveal-quote-meta",
-        "#reveal-link-meta",
+        "#codexin-gallery-meta",
+        "#codexin-video-meta",
+        "#codexin-audio-meta",
+        "#codexin-quote-meta",
+        "#codexin-link-meta",
     ];
 
     var ids = metaboxes.join(", ");
@@ -21,7 +21,7 @@ jQuery(document).ready(function($) {
         // Hide during changing
         $(ids).hide();
         if (this.value == cx_input_selected) {
-            $("#reveal-" + cx_input_selected + "-meta").show().insertAfter($("#titlediv")).css({ "marginTop": "20px", "marginBottom": "0px" });
+            $("#codexin-" + cx_input_selected + "-meta").show().insertAfter($("#titlediv")).css({ "marginTop": "20px", "marginBottom": "0px" });
         }
 
     });
@@ -29,6 +29,6 @@ jQuery(document).ready(function($) {
     var cx_input_selected = $("#post-formats-select input:radio[name=post_format]:checked").val();
 
     // Show Default checked.
-    $("#reveal-" + cx_input_selected + "-meta").show().insertAfter($("#titlediv")).css({ "marginTop": "20px", "marginBottom": "0px" });
+    $("#codexin-" + cx_input_selected + "-meta").show().insertAfter($("#titlediv")).css({ "marginTop": "20px", "marginBottom": "0px" });
 
 });

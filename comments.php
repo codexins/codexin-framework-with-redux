@@ -45,7 +45,7 @@ if ( post_password_required() ) {
 					); 
 				?>
 			</h3>
-			<ol class="comment-list">
+			<ol class="comment-list clearfix">
 				<?php
 					wp_list_comments('type=all&callback=codexin_comment_function');
 				?>

@@ -29,15 +29,18 @@ if ( ! function_exists( 'codexin_posts_nav' ) ) {
             return;
         }
 
-        echo '<div class="posts-nav">';
+        $nav = '';
+
+        $nav .= '<div class="posts-nav clearfix">';
             if( $next_link ) { 
-                echo '<div class="nav-next alignright">'. $next_link .'</div>';
+                $nav .= '<div class="nav-next alignright">'. $next_link .'</div>';
             }
             
             if( $prev_link ) {
-                echo '<div class="nav-previous alignleft">'. $prev_link .'</div>';
+                $nav .= '<div class="nav-previous alignleft">'. $prev_link .'</div>';
             }
-        echo '</div> <!-- end of posts-nav -->';
+        $nav .= '</div> <!-- end of posts-nav -->';
+        return apply_filters( 'codexin_posts_nav', $nav );
     }
 }
 
@@ -63,15 +66,18 @@ if ( ! function_exists( 'codexin_post_nav' ) ) {
             $next_link = get_next_post_link( '%link', esc_html__( '&laquo; %title', 'TEXT_DOMAIN' ) );
         }
 
-        echo '<div class="posts-nav">';
+        $nav = '';
+
+        $nav .= '<div class="posts-nav clearfix">';
             if( $next_link ) { 
-                echo '<div class="nav-next alignleft">'. $next_link .'</div>';
+                $nav .= '<div class="nav-next alignleft">'. $next_link .'</div>';
             }
             
             if( $prev_link ) {
-                echo '<div class="nav-previous alignright">'. $prev_link .'</div>';
+                $nav .= '<div class="nav-previous alignright">'. $prev_link .'</div>';
             }
-        echo '</div> <!-- end of posts-nav -->';
+        $nav .= '</div> <!-- end of posts-nav -->';
+        return apply_filters( 'codexin_post_nav', $nav );
     }
 }
 
