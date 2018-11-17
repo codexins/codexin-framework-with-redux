@@ -46,7 +46,7 @@ if ( ! function_exists( 'codexin_framework_scripts' ) ) {
 		wp_enqueue_style( 'animate', trailingslashit( get_template_directory_uri() ) . 'assets/css/animate.min.css', false, '3.7.0', 'all');
 
 		// Superfish Menu
-		wp_enqueue_style( 'superfish', trailingslashit( get_template_directory_uri() ) . 'assets/css/superfish.min.css', false, '1.7.10', 'all');
+		wp_enqueue_style( 'jquery-superfish', trailingslashit( get_template_directory_uri() ) . 'assets/css/superfish.min.css', false, '1.7.10', 'all');
 
 		// Swiper Slider
 		if( ! wp_style_is( 'swiper', 'enqueued' ) ) {
@@ -79,7 +79,7 @@ if ( ! function_exists( 'codexin_framework_scripts' ) ) {
 		wp_enqueue_script( 'bootstrap', trailingslashit( get_template_directory_uri() ) . 'assets/js/bootstrap.min.js', array ( 'jquery' ), 4.1, true);
 
 		// Modernizr
-		wp_enqueue_script( 'modernizr-js', trailingslashit( get_template_directory_uri() ) . 'assets/js/modernizr-custom.min.js', array ( 'jquery' ), 2.8, true);
+		wp_enqueue_script( 'modernizr', trailingslashit( get_template_directory_uri() ) . 'assets/js/modernizr-custom.min.js', array ( 'jquery' ), 2.8, true);
 
 		// Hover Intent
 		wp_enqueue_script( 'hoverintent-js', trailingslashit( get_template_directory_uri() ) . 'assets/js/hoverIntent.js', array ( 'jquery' ), 1.1, true);
@@ -88,7 +88,7 @@ if ( ! function_exists( 'codexin_framework_scripts' ) ) {
 		wp_enqueue_script( 'jquery-easing-js', trailingslashit( get_template_directory_uri() ) . 'assets/js/jquery.easing.1.3.js', array ( 'jquery' ), 1.3, true);
 
 		// Superfish Menu
-		wp_enqueue_script( 'superfish', trailingslashit( get_template_directory_uri() ) . 'assets/js/superfish.min.js', array ( 'jquery' ), 1.7, true);
+		wp_enqueue_script( 'jquery-superfish', trailingslashit( get_template_directory_uri() ) . 'assets/js/superfish.min.js', array ( 'jquery' ), 1.7, true);
 
 		// Swiper Slider
 		if( ! wp_script_is( 'swiper', 'enqueued' ) ) {
